@@ -28,6 +28,9 @@ function Cell() {
 }
 
 function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
+    let winner =  null;
+    let gameOver = false;
+
     const board = Gameboard();
 
     function checkForWinner(board) {
@@ -77,6 +80,32 @@ function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
     const nextRound = () => {
         switchPlayer();
         switchPlayerSymbol();
+    }
+
+    const createEmptyBoard = () => {
+        
+    }
+
+    const displayBoard = () => {
+
+    }
+
+    const getWinner = () => {
+
+    }
+
+    const getGameStatus = () => {
+        
+    }
+
+    const addSymbolToBoard = (row, col) => {
+
+    }
+
+    const initializeGame = () => {
+        setBoard(createEmptyBoard());
+        setWinner(null);
+        setGameOver(false);
     }
 
     return {
