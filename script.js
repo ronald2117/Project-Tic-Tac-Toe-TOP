@@ -49,8 +49,8 @@ function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
 
         // Check if the combination exists in the board
         const [a, b, c] = combination;
-        if (board[a] && board[a][b] && board[a][b] === board[c]) {
-          return board[a][b];
+        if (board[a] == board[c] && board[a] == board[b]) {
+          return true;
         }
       }
 
