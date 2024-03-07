@@ -15,13 +15,13 @@ function Gameboard() {
 }
 
 function Cell() {
-    const value = '';
+    let value = '';
 
     const getValue = () =>  value;
 
-    const addSymbol = (player) => {
-        if (value != '') return;
-        value = player;
+    const addSymbol = (playerSymbol) => {
+        if (playerSymbol != '') return;
+        value = playerSymbol;
     };
 
     return { getValue, addSymbol }
@@ -34,7 +34,6 @@ function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
     const board = Gameboard();
 
     function checkForWinner(board) {
-      // Define the possible winning combinations
       const winningCombinations = [
         [0, 1, 2],
         [3, 4, 5],
@@ -46,18 +45,14 @@ function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
         [2, 4, 6],
       ];
 
-      // Loop through each possible winning combination
       for (let i = 0; i < winningCombinations.length; i++) {
         const combination = winningCombinations[i];
 
-        // Check if the combination exists in the board
         const [a, b, c] = combination;
         if (board[a] == board[c] && board[a] == board[b]) {
           return true;
         }
       }
-
-      // If no winner, return null
       return null;
     }
    
@@ -68,12 +63,12 @@ function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
         },
         {
             name: p2Name,
-            symbol: 'Y'
+            symbol: 'O'
         }
 
     ]
 
-    const currentPlayer = p1;
+    const currentPlayer = players[0];
     
     const switchPlayerTurn = () => currentPlayer = currentPlayer == players[0] ? players[1]: players[0];
 
@@ -83,24 +78,29 @@ function GameController(p1Name = 'Player One', p2Name = 'Player Two') {
     }
 
     const createEmptyBoard = () => {
-        
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                board[i][j]
+            }
+        }
     }
 
     const displayBoard = () => {
-
+        console.log(board);
     }
 
     const getWinner = () => {
+        return winner;
+    }
 
+    const setWinner = (playerName) => {
+        winner = playerName;
     }
 
     const getGameStatus = () => {
         
     }
 
-    const addSymbolToBoard = (row, col) => {
-
-    }
 
     const initializeGame = () => {
         setBoard(createEmptyBoard());
