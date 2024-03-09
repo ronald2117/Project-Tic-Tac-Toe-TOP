@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")();
+
 function Gameboard() {
   const board = [];
 
@@ -14,13 +16,27 @@ function Gameboard() {
     board[row][column].addSymbol(playerSymbol);
   };
 
-  return { getBoard };
+  const printBoard = () => {
+    for (let i = 0; i < board.length; i++) {
+      let row = "";
+      for (let j = 0; j < board[i].length; j++) {
+        row += board[i][j].getValue() + " ";
+      }
+      console.log(row);
+    }
+  }
+
+  return { getBoard, putSymbol, printBoard };
 }
 
 function Cell() {
   let value = "";
 
   const getValue = () => value;
+
+  const setValue = (newValue) => {
+    value = newValue;
+  }
 
   const addSymbol = (playerSymbol) => {
     if (playerSymbol != "") return;
@@ -35,7 +51,19 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   let winner = null;
   let gameOver = false;
   let currentPlayer = players[0];
+  let numberOfRounds = 0;
 
+  const getWinner = () => {
+    return winner;
+  };
+
+  const setWinner = (playerName) => {
+    winner = playerName;
+  };
+
+  const getNumberOfRounds = () => {
+    return numberOfRounds;
+  }
 
   function checkForWinner(board) {
     const winningCombinations = [
@@ -54,6 +82,8 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
 
       const [a, b, c] = combination;
       if (board[a] == board[c] && board[a] == board[b]) {
+        setWinner(currentPlayer.name);
+        currentPlayer.score++;
         return true;
       }
     }
@@ -64,13 +94,14 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     {
       name: p1Name,
       symbol: "X",
+      score: 0
     },
     {
       name: p2Name,
       symbol: "O",
+      score: 0
     },
   ];
-
 
   const switchPlayerTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
@@ -83,17 +114,9 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const createEmptyBoard = () => {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
-        board[i][j];
+        board[i][j].setValue("");
       }
     }
-  };
-
-  const getWinner = () => {
-    return winner;
-  };
-
-  const setWinner = (playerName) => {
-    winner = playerName;
   };
 
   const initializeGame = () => {
@@ -104,15 +127,40 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
 
   const playRound = (column, row) => {
     board.putSymbol(row, column, currentPlayer.symbol);
+  };
+
+  const getGameStatus = () => {
+    return gameOver;
+  }
+
+  const playOnTheConsole = () => {
+    while (!gameOver) {
+      console.log(`It's ${currentPlayer.name}'s turn`);
+      let row = prompt("Enter row: ");
+      let column = prompt("Enter column: ");
+      playRound(row, column);
+      printBoard();
+      checkForWinner(board.getBoard());
+      switchPlayerTurn();
+      numberOfRounds++;
+    }
   }
 
   return {
-    playRound
-  };
+    getWinner,
+    setWinner,
+    checkForWinner,
+    playRound,
+    switchPlayerTurn,
+    nextRound,
+    createEmptyBoard,
+    initializeGame,
+    setGameOver,
+    playOnTheConsole
+    };
 }
 
-function HandleDisplay() {
-  
-}
+function HandleDisplay() {}
 
 const game = Gameboard();
+game.playOnTheConsole();
