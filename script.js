@@ -24,7 +24,7 @@ function Gameboard() {
       }
       console.log(row);
     }
-  }
+  };
 
   return { getBoard, putSymbol, printBoard };
 }
@@ -33,10 +33,6 @@ function Cell() {
   let value = "";
 
   const getValue = () => value;
-
-  const setValue = (newValue) => {
-    value = newValue;
-  }
 
   const addSymbol = (playerSymbol) => {
     if (playerSymbol != "") return;
@@ -60,10 +56,6 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const setWinner = (playerName) => {
     winner = playerName;
   };
-
-  const getNumberOfRounds = () => {
-    return numberOfRounds;
-  }
 
   function checkForWinner(board) {
     const winningCombinations = [
@@ -94,12 +86,12 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     {
       name: p1Name,
       symbol: "X",
-      score: 0
+      score: 0,
     },
     {
       name: p2Name,
       symbol: "O",
-      score: 0
+      score: 0,
     },
   ];
 
@@ -107,7 +99,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
   const nextRound = () => {
-    switchPlayer();
+    switchPlayerTurn();
     switchPlayerSymbol();
   };
 
@@ -122,16 +114,12 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const initializeGame = () => {
     setBoard(createEmptyBoard());
     setWinner(null);
-    setGameOver(false);
+    gameOver = false;
   };
 
   const playRound = (column, row) => {
     board.putSymbol(row, column, currentPlayer.symbol);
   };
-
-  const getGameStatus = () => {
-    return gameOver;
-  }
 
   const playOnTheConsole = () => {
     while (!gameOver) {
@@ -144,7 +132,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
       switchPlayerTurn();
       numberOfRounds++;
     }
-  }
+  };
 
   return {
     getWinner,
@@ -155,12 +143,9 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     nextRound,
     createEmptyBoard,
     initializeGame,
-    setGameOver,
-    playOnTheConsole
-    };
+    playOnTheConsole,
+  };
 }
 
-function HandleDisplay() {}
-
 const game = Gameboard();
-game.playOnTheConsole();
+console.log(game.getBoard());
