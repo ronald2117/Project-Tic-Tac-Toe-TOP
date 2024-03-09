@@ -34,6 +34,10 @@ function Cell() {
 
   const getValue = () => value;
 
+  const setValue = (newValue) => {
+    value = newValue;
+  }
+
   const addSymbol = (playerSymbol) => {
     if (playerSymbol != "") return;
     value = playerSymbol;
@@ -43,6 +47,19 @@ function Cell() {
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
+  const players = [
+    {
+      name: p1Name,
+      symbol: "X",
+      score: 0,
+    },
+    {
+      name: p2Name,
+      symbol: "O",
+      score: 0,
+    },
+  ];
+
   const board = Gameboard();
   let winner = null;
   let gameOver = false;
@@ -56,6 +73,10 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const setWinner = (playerName) => {
     winner = playerName;
   };
+
+  const getNumberOfRounds = () => {
+    return numberOfRounds;
+  }
 
   function checkForWinner(board) {
     const winningCombinations = [
@@ -82,24 +103,11 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     return null;
   }
 
-  const players = [
-    {
-      name: p1Name,
-      symbol: "X",
-      score: 0,
-    },
-    {
-      name: p2Name,
-      symbol: "O",
-      score: 0,
-    },
-  ];
-
   const switchPlayerTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
   const nextRound = () => {
-    switchPlayerTurn();
+    switchPlayer();
     switchPlayerSymbol();
   };
 
@@ -127,7 +135,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
       let row = prompt("Enter row: ");
       let column = prompt("Enter column: ");
       playRound(row, column);
-      printBoard();
+      board.printBoard();
       checkForWinner(board.getBoard());
       switchPlayerTurn();
       numberOfRounds++;
@@ -147,5 +155,5 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   };
 }
 
-const game = Gameboard();
-console.log(game.getBoard());
+const game = GameController();
+game.playOnTheConsole();
