@@ -137,7 +137,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     gameOver = false;
   };
 
-  const playRound = (column, row) => {
+  const playRound = (row, column) => {
     board.putSymbol(row, column, currentPlayer.symbol);
   };
 
