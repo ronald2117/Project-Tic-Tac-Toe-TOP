@@ -1,5 +1,25 @@
 const prompt = require("prompt-sync")();
 
+function Cell() {
+  let symbol = null;
+
+  const getSymbol = () => symbol;
+
+  const setSymbol = (newSymbol) => {
+    symbol = newValue;
+  }
+
+  const addSymbol = (newSymbol) => {
+    if (symbol === null) {
+      symbol = newSymbol;
+    } else {
+      throw new Error("Cell is already occupied");
+    }
+  };
+
+  return { getSymbol, addSymbol };
+}
+
 function Gameboard() {
   const board = [];
 
@@ -13,37 +33,24 @@ function Gameboard() {
   const getBoard = () => board;
 
   const putSymbol = (row, column, playerSymbol) => {
-    board[row][column].addSymbol(playerSymbol);
+    if (row >= 0 && row < 3 && column >= 0 && column < 3) {
+      board[row][column].addSymbol(playerSymbol);
+    } else {
+      throw new Error("Invalid board position");
+    }
   };
 
   const printBoard = () => {
     for (let i = 0; i < board.length; i++) {
-      let row = "";
+      let row = [];
       for (let j = 0; j < board[i].length; j++) {
-        row += board[i][j].getValue() + " ";
+        row.push(board[i][j].getSymbol());
       }
       console.log(row);
     }
   };
 
   return { getBoard, putSymbol, printBoard };
-}
-
-function Cell() {
-  let value = "";
-
-  const getValue = () => value;
-
-  const setValue = (newValue) => {
-    value = newValue;
-  }
-
-  const addSymbol = (playerSymbol) => {
-    if (playerSymbol != "") return;
-    value = playerSymbol;
-  };
-
-  return { getValue, addSymbol };
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
@@ -103,6 +110,11 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     return null;
   }
 
+  const switchPlayerSymbol = () => {
+    players[0].symbol = players[0].symbol == "X" ? "O" : "X";
+    players[1].symbol = players[1].symbol == "O" ? "X" : "O";
+  }
+
   const switchPlayerTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
@@ -132,6 +144,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const playOnTheConsole = () => {
     while (!gameOver) {
       console.log(`It's ${currentPlayer.name}'s turn`);
+      console.log('His/her symbol is: ', currentPlayer.symbol);
       let row = prompt("Enter row: ");
       let column = prompt("Enter column: ");
       playRound(row, column);
