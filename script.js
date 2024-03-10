@@ -13,7 +13,7 @@ function Cell() {
     if (symbol === null) {
       symbol = newSymbol;
     } else {
-      throw new Error("Cell is already occupied");
+      throw new Error("Cell already has a symbol");
     }
   };
 
@@ -36,7 +36,7 @@ function Gameboard() {
     if (row >= 0 && row < 3 && column >= 0 && column < 3) {
       board[row][column].addSymbol(playerSymbol);
     } else {
-      throw new Error("Invalid board position");
+      throw new Error("Invalid row or column");
     }
   };
 
@@ -71,7 +71,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   let winner = null;
   let gameOver = false;
   let currentPlayer = players[0];
-  let numberOfRounds = 0;
+  let numberOfRounds = 1;
 
   const getWinner = () => {
     return winner;
@@ -104,10 +104,10 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
       if (board[a] == board[c] && board[a] == board[b]) {
         setWinner(currentPlayer.name);
         currentPlayer.score++;
-        return true;
+        gameOver = true;
       }
     }
-    return null;
+    return false;
   }
 
   const switchPlayerSymbol = () => {
@@ -137,20 +137,16 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     gameOver = false;
   };
 
-  const playRound = (row, column) => {
-    board.putSymbol(row, column, currentPlayer.symbol);
-  };
-
-  const playOnTheConsole = () => {
+  const playRoundOnTheConsole = () => {
     while (!gameOver) {
       console.log(`It's ${currentPlayer.name}'s turn`);
       console.log('His/her symbol is: ', currentPlayer.symbol);
       let row = prompt("Enter row: ");
       let column = prompt("Enter column: ");
-      playRound(row, column);
+      board.putSymbol(row, column, currentPlayer.symbol);
       board.printBoard();
-      checkForWinner(board.getBoard());
       switchPlayerTurn();
+      checkForWinner(board.getBoard());
       numberOfRounds++;
     }
   };
