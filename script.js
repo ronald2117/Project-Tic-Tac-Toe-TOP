@@ -12,8 +12,9 @@ function Cell() {
   const addSymbol = (newSymbol) => {
     if (symbol === null) {
       symbol = newSymbol;
+      return true;
     } else {
-      throw new Error("Cell already has a symbol");
+      return false;
     }
   };
 
@@ -67,11 +68,11 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     },
   ];
 
-  const board = Gameboard();
-  let winner = null;
-  let gameOver = false;
-  let currentPlayer = players[0];
-  let numberOfRounds = 1;
+   const board = Gameboard();
+   let winner = null;
+   let gameOver = false;
+   let currentPlayer = players[0];
+   let numberOfRounds = 1;
 
   const getWinner = () => {
     return winner;
@@ -86,28 +87,24 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   }
 
   function checkForWinner(board) {
+    const oneDimensionalBoard = board.flat();
     const winningCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+      [0, 4, 8], [2, 4, 6], // diagonals
     ];
 
     for (let i = 0; i < winningCombinations.length; i++) {
-      const combination = winningCombinations[i];
-
-      const [a, b, c] = combination;
-      if (board[a] == board[c] && board[a] == board[b]) {
+      const [a, b, c] = winningCombinations[i];
+      if (
+        oneDimensionalBoard[a].getSymbol() &&
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() &&
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol()
+      ) {
         setWinner(currentPlayer.name);
-        currentPlayer.score++;
         gameOver = true;
       }
     }
-    return false;
   }
 
   const switchPlayerSymbol = () => {
@@ -137,13 +134,13 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     gameOver = false;
   };
 
-  const playRoundOnTheConsole = () => {
+  const playOnTheConsole = () => {
     while (!gameOver) {
       console.log(`It's ${currentPlayer.name}'s turn`);
       console.log('His/her symbol is: ', currentPlayer.symbol);
       let row = prompt("Enter row: ");
       let column = prompt("Enter column: ");
-      board.putSymbol(row, column, currentPlayer.symbol);
+      board.putSymbol(row, column, currentPlayer.symbol)
       board.printBoard();
       switchPlayerTurn();
       checkForWinner(board.getBoard());
@@ -155,7 +152,6 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     getWinner,
     setWinner,
     checkForWinner,
-    playRound,
     switchPlayerTurn,
     nextRound,
     createEmptyBoard,
