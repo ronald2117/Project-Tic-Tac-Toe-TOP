@@ -18,9 +18,11 @@ body {
   grid-template-columns: repeat(3, 1fr);
   width: 300px;
   height: 300px;
+  border: 2px solid black;
 }
 
 .game > div {
+  border: 2px solid black;
 }
 
 h1 {
