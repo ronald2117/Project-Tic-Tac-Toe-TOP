@@ -160,5 +160,22 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   };
 }
 
+function handleDisplay() {
+  const display = document.querySelector(".display");
+  const cell = document.querySelectorAll(".cell");
+  const playerOneScore = document.querySelector(".player-one-score");
+  const playerTwoScore = document.querySelector(".player-two-score");
+  const winner = GameController().getWinner();
+  const numberOfRounds = GameController().getNumberOfRounds();
+
+  if (winner) {
+    display.textContent = `${winner} wins!`;
+  } else if (numberOfRounds === 9) {
+    display.textContent = "It's a draw!";
+  }
+
+  
+}
+
 const game = GameController();
 game.playOnTheConsole();
