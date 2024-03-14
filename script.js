@@ -160,7 +160,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   };
 }
 
-function handleDisplay() {
+function HandleDisplay() {
   const display = document.querySelector(".display");
   const cell = document.querySelectorAll(".cell");
   const playerOneScore = document.querySelector(".player-one-score");
