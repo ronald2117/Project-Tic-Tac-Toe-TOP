@@ -157,24 +157,33 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     createEmptyBoard,
     initializeGame,
     playOnTheConsole,
+    getBoard:board.getBoard
   };
 }
 
-function HandleDisplay() {
-  const display = document.querySelector(".display");
+function ScreenController() {
   const cell = document.querySelectorAll(".cell");
-  const playerOneScore = document.querySelector(".player-one-score");
-  const playerTwoScore = document.querySelector(".player-two-score");
-  const winner = GameController().getWinner();
-  const numberOfRounds = GameController().getNumberOfRounds();
+  const p1score = document.querySelector(".p1-score");
+  const p2Score = document.querySelector(".p2-score");
+  const game = GameController();
 
-  if (winner) {
-    display.textContent = `${winner} wins!`;
-  } else if (numberOfRounds === 9) {
-    display.textContent = "It's a draw!";
+  const clearAllCells = () => {
+    cell.forEach((cell) => {
+      while (cell.firstChild) {
+        cell.removeChild(cell.firstChild);
+      }
+    })
   }
 
-  
+  const updateCell = (row, column, symbol) => {
+    cell[row * 3 + column].textContent = symbol;
+  }
+
+  const updateScore = (p1, p2) => {
+    p1score.textContent = p1;
+    p2Score.textContent = p2;
+  }
+      
 }
 
 const game = GameController();
