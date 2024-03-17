@@ -7,7 +7,7 @@ function Cell() {
 
   const setSymbol = (newSymbol) => {
     symbol = newValue;
-  }
+  };
 
   const addSymbol = (newSymbol) => {
     if (symbol === null) {
@@ -68,11 +68,11 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     },
   ];
 
-   const board = Gameboard();
-   let winner = null;
-   let gameOver = false;
-   let currentPlayer = players[0];
-   let numberOfRounds = 1;
+  const board = Gameboard();
+  let winner = null;
+  let gameOver = false;
+  let currentPlayer = players[0];
+  let numberOfRounds = 1;
 
   const getWinner = () => {
     return winner;
@@ -84,22 +84,29 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
 
   const getNumberOfRounds = () => {
     return numberOfRounds;
-  }
+  };
 
   function checkForWinner(board) {
     const oneDimensionalBoard = board.flat();
     const winningCombinations = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
-      [0, 4, 8], [2, 4, 6], // diagonals
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // columns
+      [0, 4, 8],
+      [2, 4, 6], // diagonals
     ];
 
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
       if (
         oneDimensionalBoard[a].getSymbol() &&
-        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() &&
-        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol()
+        oneDimensionalBoard[a].getSymbol() ===
+          oneDimensionalBoard[b].getSymbol() &&
+        oneDimensionalBoard[a].getSymbol() ===
+          oneDimensionalBoard[c].getSymbol()
       ) {
         setWinner(currentPlayer.name);
         gameOver = true;
@@ -110,7 +117,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const switchPlayerSymbol = () => {
     players[0].symbol = players[0].symbol == "X" ? "O" : "X";
     players[1].symbol = players[1].symbol == "O" ? "X" : "O";
-  }
+  };
 
   const switchPlayerTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
@@ -137,10 +144,10 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const playOnTheConsole = () => {
     while (!gameOver) {
       console.log(`It's ${currentPlayer.name}'s turn`);
-      console.log('His/her symbol is: ', currentPlayer.symbol);
+      console.log("His/her symbol is: ", currentPlayer.symbol);
       let row = prompt("Enter row: ");
       let column = prompt("Enter column: ");
-      board.putSymbol(row, column, currentPlayer.symbol)
+      board.putSymbol(row, column, currentPlayer.symbol);
       board.printBoard();
       switchPlayerTurn();
       checkForWinner(board.getBoard());
@@ -157,7 +164,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     createEmptyBoard,
     initializeGame,
     playOnTheConsole,
-    getBoard:board.getBoard
+    getBoard: board.getBoard,
   };
 }
 
@@ -171,9 +178,18 @@ function ScreenController() {
   const gameBoardDiv = document.querySelector(".game-board-div");
 
   const updateScreen = () => {
+    gameBoardDiv.textContent = "";
 
-  }
-      
+    board = GameController.getBoard();
+
+    board.forEach((row) => {
+      row.forEach((column, index) => {
+        const cell = document.createElement("button");
+        cell.classList.add("cell");
+        cell.dataset.column = index;
+      });
+    });
+  };
 }
 
 const game = GameController();
