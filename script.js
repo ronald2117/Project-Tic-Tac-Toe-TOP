@@ -166,22 +166,12 @@ function ScreenController() {
   const p1score = document.querySelector(".p1-score");
   const p2Score = document.querySelector(".p2-score");
   const game = GameController();
+  const p1Name = document.querySelector(".player1");
+  const p2Name = document.querySelector(".player2");
+  const gameBoardDiv = document.querySelector(".game-board-div");
 
-  const clearAllCells = () => {
-    cell.forEach((cell) => {
-      while (cell.firstChild) {
-        cell.removeChild(cell.firstChild);
-      }
-    })
-  }
+  const updateScreen = () => {
 
-  const updateCell = (row, column, symbol) => {
-    cell[row * 3 + column].textContent = symbol;
-  }
-
-  const updateScore = (p1, p2) => {
-    p1score.textContent = p1;
-    p2Score.textContent = p2;
   }
       
 }
