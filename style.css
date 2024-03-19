@@ -13,7 +13,7 @@ body {
   justify-content: center;
 }
 
-.game {
+.game-board-div {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 300px;
@@ -21,7 +21,7 @@ body {
   border: 2px solid black;
 }
 
-.game > div {
+.game-board-div > div {
   border: 2px solid black;
 }
 
