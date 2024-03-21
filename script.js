@@ -180,7 +180,30 @@ function ScreenController() {
   const clearScreen = () => {
     cell.forEach((cell) => (cell.textContent = ""));
   };
+
+  const addSymbolToCell = (row, column, symbol) => {
+    cell[row * 3 + column].textContent = symbol;
+  };
+
+  cell.forEach((cell, index) => {
+    cell.addEventListener("click", () => {
+      alert("Cell clicked");
+      const row = Math.floor(index / 3);
+      const column = index % 3;
+      game.putSymbol(row, column, game.currentPlayer.symbol);
+      addSymbolToCell(row, column, game.currentPlayer.symbol);
+      game.checkForWinner(game.getBoard());
+      if (game.getWinner()) {
+        alert(`${game.getWinner()} won the game!`);
+        game.initializeGame();
+        clearScreen();
+      } else {
+        game.nextRound();
+      }
+    });
+  });
 }
 
 const game = GameController();
 game.playOnTheConsole();
+ScreenController();
