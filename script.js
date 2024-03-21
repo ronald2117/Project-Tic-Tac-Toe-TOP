@@ -177,18 +177,8 @@ function ScreenController() {
   const p2Name = document.querySelector(".player2");
   const gameBoardDiv = document.querySelector(".game-board-div");
 
-  const updateScreen = () => {
-    gameBoardDiv.textContent = "";
-
-    board = GameController.getBoard();
-
-    board.forEach((row) => {
-      row.forEach((column, index) => {
-        const cell = document.createElement("button");
-        cell.classList.add("cell");
-        cell.dataset.column = index;
-      });
-    });
+  const clearScreen = () => {
+    cell.forEach((cell) => (cell.textContent = ""));
   };
 }
 
