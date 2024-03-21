@@ -1,5 +1,3 @@
-const prompt = require("prompt-sync")();
-
 function Cell() {
   let symbol = null;
 
@@ -41,17 +39,7 @@ function Gameboard() {
     }
   };
 
-  const printBoard = () => {
-    for (let i = 0; i < board.length; i++) {
-      let row = [];
-      for (let j = 0; j < board[i].length; j++) {
-        row.push(board[i][j].getSymbol());
-      }
-      console.log(row);
-    }
-  };
-
-  return { getBoard, putSymbol, printBoard };
+  return { getBoard, putSymbol };
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
@@ -141,20 +129,6 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     gameOver = false;
   };
 
-  const playOnTheConsole = () => {
-    while (!gameOver) {
-      console.log(`It's ${currentPlayer.name}'s turn`);
-      console.log("His/her symbol is: ", currentPlayer.symbol);
-      let row = prompt("Enter row: ");
-      let column = prompt("Enter column: ");
-      board.putSymbol(row, column, currentPlayer.symbol);
-      board.printBoard();
-      switchPlayerTurn();
-      checkForWinner(board.getBoard());
-      numberOfRounds++;
-    }
-  };
-
   return {
     getWinner,
     setWinner,
@@ -163,7 +137,6 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     nextRound,
     createEmptyBoard,
     initializeGame,
-    playOnTheConsole,
     getBoard: board.getBoard,
   };
 }
@@ -205,5 +178,4 @@ function ScreenController() {
 }
 
 const game = GameController();
-game.playOnTheConsole();
 ScreenController();
