@@ -111,7 +111,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
   const nextRound = () => {
-    switchPlayer();
+    switchPlayerTurn();
     switchPlayerSymbol();
   };
 
@@ -129,6 +129,13 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     gameOver = false;
   };
 
+  const putSymbol = (row, column, symbol) => {
+    if (gameOver) {
+      return;
+    }
+    board.putSymbol(row, column, symbol);
+  };
+
   return {
     getWinner,
     setWinner,
@@ -138,6 +145,8 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     createEmptyBoard,
     initializeGame,
     getBoard: board.getBoard,
+    currentPlayer,
+    putSymbol,
   };
 }
 
@@ -152,6 +161,7 @@ function ScreenController() {
 
   const clearScreen = () => {
     cell.forEach((cell) => (cell.textContent = ""));
+    
   };
 
   const addSymbolToCell = (row, column, symbol) => {
@@ -160,7 +170,6 @@ function ScreenController() {
 
   cell.forEach((cell, index) => {
     cell.addEventListener("click", () => {
-      alert("Cell clicked");
       const row = Math.floor(index / 3);
       const column = index % 3;
       game.putSymbol(row, column, game.currentPlayer.symbol);
