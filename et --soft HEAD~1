@@ -1,0 +1,38 @@
+[33me6a6c98[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m Fix typo in p1score variable assignment
+[33md3d60ba[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Refactor switchPlayer to switchPlayerTurn and add putSymbol method
+[33m674a86b[m Remove console-based gameplay
+[33m8566987[m Add click event listener to cells and update screen on click
+[33mcb301cc[m Refactor updateScreen function to clear the game board
+[33m209d3b5[m Refactor game board cells to include data attributes for column and row
+[33ma933a4c[m Merge branch 'branch1'
+[33m168e7cc[m[33m ([m[1;32mbranch1[m[33m)[m edit html and css to revert to past changes
+[33ma29e2d0[m ignore .idea folder
+[33m016391a[m[33m ([m[1;32mtry[m[33m)[m ignore .idea file from intelij
+[33m5fd15df[m Fix syntax error and update screen in ScreenController
+[33mcb951a3[m Refactor game board and update screen display
+[33m916498b[m Remove empty cells from game board
+[33md440a48[m Refactor ScreenController and add clearAllCells and updateCell functions
+[33mda74af7[m Add cursor pointer to .cell class
+[33m659f236[m Update handleDisplay function name
+[33mba314ab[m Add handleDisplay function to update game display
+[33m8ed7afb[m Add menu button with material symbols outlined font
+[33m99c3321[m Add border to body and game divs
+[33m13ab0b3[m Add center alignment to h1 element in style.css
+[33m99152e4[m Add styles for game container and body
+[33m1cef2e1[m Add reset and exit buttons to index.html
+[33m6d55622[m Add Tic Tac Toe game layout
+[33m722929e[m Refactor game logic and fix bug in checkForWinner function
+[33m4b09560[m Fix error messages and update game logic
+[33mc884bdd[m Swap row and column parameters in playRound function
+[33mc8bf510[m Refactor game logic and fix bugs in Gameboard and GameController
+[33m44e8a00[m Refactor game logic and add new features
+[33m12468d2[m Refactor game logic and add console play functionality
+[33m9403dc7[m Refactor game logic and add console play functionality
+[33m6c7a24b[m Refactor game logic and remove unused code
+[33m48016be[m Refactor game logic and display board
+[33m05d595e[m Refactor code for adding symbols and checking for a winner
+[33mb0b27b3[m Add necessary methods and properties to the game controller object
+[33mb8619ac[m Fix check for winner function of game controller object
+[33mfd8b6d2[m Remove unecessary code
+[33m1b1efed[m create and init html, css and js files
+[33mc6c1839[m Initial commit
