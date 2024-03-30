@@ -152,7 +152,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
 
 function ScreenController() {
   const cell = document.querySelectorAll(".cell");
-  const p1score = document.querySelector(".p1-score");
+  const p1score = docment.querySelector(".p1-score");
   const p2Score = document.querySelector(".p2-score");
   const game = GameController();
   const p1Name = document.querySelector(".player1");
