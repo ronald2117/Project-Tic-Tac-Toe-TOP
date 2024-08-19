@@ -5,15 +5,31 @@
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "Fredoka One", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #43115b;
   display: flex;
   justify-content: center;
 }
 
-.game-board-div {
+.restart-btn {
+  position: absolute;
+  bottom: 0;     /* Aligns the div to the bottom of the containing element */
+  right: 0;       /* Aligns the div to the left side of the containing element */
+  width: 50pxpx;  /* Example width */
+  height: 24px; /* Example height */
+  background-color: #43115B; /* Background color for visual reference */
+}
+
+.body {
+  background-color: #5A1E76;
+  width: 95%;
+  height: 100vh;
+  border-radius: 30px;
+}
+
+.game-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 300px;
@@ -21,7 +37,7 @@ body {
   border: 2px solid black;
 }
 
-.game-board-div > div {
+.game-board > div {
   width: 100px;
   height: 100px;
   border: 2px solid black;
