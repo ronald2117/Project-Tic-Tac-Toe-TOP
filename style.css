@@ -29,7 +29,16 @@ body {
   border-radius: 30px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.game-container {
+  background-color: #2B0040;
+  padding: 50px;
+  border-radius: 30px;
+}
 
 .game-board {
   display: grid;
