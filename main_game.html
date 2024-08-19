@@ -17,22 +17,44 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Tic Tac Toe</h1>
-        <div class="player1"><div class="p1-score"></div></div>
-        <div class="game-board-div">
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
+    <div class="body">
+        <div class="game-container">
+            <div class="inner-container">
+                <div class="scores-section">
+                    <div class="p1-score-container">
+                        <p>PLAYER 1</p>
+                        <p class="p1-score"></p>
+                    </div>
+                    <div class="draw-score-container">
+                        <p>DRAW</p>
+                        <p class="draw-score"></p>
+                    </div>
+                    <div class="p2-score-container">
+                        <p>PLAYER 2</p>
+                        <p class="p2-score"></p>
+                    </div>
+                </div>
+                <div class="game-board">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="controller">
+                    <div class="greet"></div>
+                    <div class="turn-indicator"></div>
+                    <div class="new-game-btn">New Game</div>
+                </div>
+            </div>
         </div>
-        <div class="player2"><div class="p2-score"></div></div>
-        <div class="menu"><span class="material-symbols-outlined">Menu</span></div>
+        <h1><span class="yellow-txt">tic.</span><span class="blue-txt">tac.</span><span class="yellow-txt">toe.</span></h1>
+    </div>
+    <div class="restart-btn">Restart</div>
     <script src="script.js"></script>
 </body>
 </html>
