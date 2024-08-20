@@ -163,9 +163,12 @@ function ScreenController() {
   };
   
   const addSymbolToCell = (row, column, symbol) => {
+    if (cell[row * 3 + column].textContent !== "") {
+      return;
+    }
     if (symbol == "X") {
       cell[row * 3 + column].style.color = "#72CFF9";
-    } else {
+    } else if (symbol == "O"){
       cell[row * 3 + column].style.color = "#DCBF3F";
     }
     cell[row * 3 + column].textContent = symbol;
