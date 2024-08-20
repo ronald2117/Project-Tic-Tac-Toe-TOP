@@ -3,11 +3,7 @@ function Cell() {
 
   const getSymbol = () => symbol;
 
-  const setSymbol = (newSymbol) => {
-    symbol = newValue;
-  };
-
-  const addSymbol = (newSymbol) => {
+  const putSymbol = (newSymbol) => {
     if (symbol === null) {
       symbol = newSymbol;
       return true;
@@ -16,7 +12,11 @@ function Cell() {
     }
   };
 
-  return { getSymbol, addSymbol };
+  const removeSymbol = () => {
+    symbol = null;
+  };
+
+  return { getSymbol, putSymbol };
 }
 
 function Gameboard() {
@@ -26,53 +26,28 @@ function Gameboard() {
     board[i] = [];
     for (let j = 0; j < 3; j++) {
       board[i].push(Cell());
+
+
     }
   }
 
   const getBoard = () => board;
 
-  const putSymbol = (row, column, playerSymbol) => {
+  const addSymbol = (row, column, playerSymbol) => {
     if (row >= 0 && row < 3 && column >= 0 && column < 3) {
-      board[row][column].addSymbol(playerSymbol);
+      board[row][column].putSymbol(playerSymbol);
     } else {
       throw new Error("Invalid row or column");
     }
   };
 
-  return { getBoard, putSymbol };
-}
-
-function GameController(p1Name = "Player One", p2Name = "Player Two") {
-  const players = [
-    {
-      name: p1Name,
-      symbol: "X",
-      score: 0,
-    },
-    {
-      name: p2Name,
-      symbol: "O",
-      score: 0,
-    },
-  ];
-
-  const board = Gameboard();
-  let winner = null;
-  let gameOver = false;
-  let currentPlayer = players[0];
-  let numberOfRounds = 1;
-
-  const getWinner = () => {
-    return winner;
-  };
-
-  const setWinner = (playerName) => {
-    winner = playerName;
-  };
-
-  const getNumberOfRounds = () => {
-    return numberOfRounds;
-  };
+  const clearBoard = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        board[i][j].removeSymbol();
+      }
+    }
+  }
 
   function checkForWinner(board) {
     const oneDimensionalBoard = board.flat();
@@ -96,51 +71,76 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
         oneDimensionalBoard[a].getSymbol() ===
           oneDimensionalBoard[c].getSymbol()
       ) {
-        setWinner(currentPlayer.name);
+        winner = currentPlayer.name;
         gameOver = true;
       }
     }
   }
 
-  const switchPlayerSymbol = () => {
-    players[0].symbol = players[0].symbol == "X" ? "O" : "X";
-    players[1].symbol = players[1].symbol == "O" ? "X" : "O";
-  };
+  return { getBoard, putSymbol, clearBoard, checkForWinner };
+}
 
-  const switchPlayerTurn = () =>
+function GameController(p1Name = "Player One", p2Name = "Player Two") {
+  const players = [
+    {
+      name: p1Name,
+      symbol: "X",
+      score: 0,
+    },
+    {
+      name: p2Name,
+      symbol: "O",
+      score: 0,
+    },
+  ];
+
+  let drawScore = 0;
+  const board = Gameboard();
+  let winner = null;
+  let gameOver = false;
+  let currentPlayer = players[0];
+  let firstPlayer = players[0];
+
+  const getP1Score = () => {
+    return players[0].score;
+  }
+
+  const getP2Score = () => {
+    return players[1].score;
+  }
+
+  const getDrawScore = () => {
+    return drawScore;
+  }
+
+  const IsGameOver = () => {
+    return gameOver;
+  }
+
+  const getWinner = () => {
+    return winner;
+  }
+
+  const getCurrentPlayer = () => {
+    return currentPlayer;
+  }
+
+  const getFirstPlayer = () => {
+    return firstPlayer;
+  }
+
+  const nextPlayerTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
-  const nextRound = () => {
-    switchPlayerTurn();
-    switchPlayerSymbol();
-  };
-
-  const createEmptyBoard = () => {
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        board[i][j].setValue("");
-      }
-    }
-  };
-
-  const initializeGame = () => {
-    setBoard(createEmptyBoard());
-    setWinner(null);
+  const newRound = () => {
     gameOver = false;
-  };
-
-  const putSymbol = (row, column, symbol) => {
-    if (gameOver) {
-      return;
-    }
-    board.putSymbol(row, column, symbol);
-  };
+    winner = null;
+    currentPlayer.symbol = currentPlayer.symbol == "X" ? "O" : "X";
+    firstPlayer =
+  }
 
   return {
-    getWinner,
-    setWinner,
     checkForWinner,
-    switchPlayerTurn,
     nextRound,
     createEmptyBoard,
     initializeGame,
@@ -148,6 +148,29 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     currentPlayer,
     putSymbol,
   };
+}
+
+function ConsoleController() {
+  game = GameController();
+
+  const printBoard = () => {
+    const board = game.getBoard();
+    for (let i = 0; i < board.length; i++) {
+      let row = "";
+      for (let j = 0; j < board[i].length; j++) {
+        row += board[i][j].getSymbol() || " ";
+        if (j < board[i].length - 1) {
+          row += " | ";
+        }
+      }
+      console.log(row);
+      if (i < board.length - 1) {
+        console.log("---------");
+      }
+    }
+  };
+
+  printBoard();
 }
 
 function ScreenController() {
@@ -163,9 +186,6 @@ function ScreenController() {
   };
   
   const addSymbolToCell = (row, column, symbol) => {
-    if (cell[row * 3 + column].textContent !== "") {
-      return;
-    }
     if (symbol == "X") {
       cell[row * 3 + column].style.color = "#72CFF9";
     } else if (symbol == "O"){
@@ -192,5 +212,4 @@ function ScreenController() {
   });
 }
 
-const game = GameController();
-ScreenController();
+ConsoleController();
