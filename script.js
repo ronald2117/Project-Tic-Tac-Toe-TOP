@@ -155,16 +155,19 @@ function ScreenController() {
   const p1score = document.querySelector(".p1-score");
   const p2Score = document.querySelector(".p2-score");
   const game = GameController();
-  const p1Name = document.querySelector(".player1");
-  const p2Name = document.querySelector(".player2");
-  const gameBoardDiv = document.querySelector(".game-board-div");
+  const gameBoardDiv = document.querySelector(".game-board");
 
   const clearScreen = () => {
     cell.forEach((cell) => (cell.textContent = ""));
     
   };
-
+  
   const addSymbolToCell = (row, column, symbol) => {
+    if (symbol == "X") {
+      cell[row * 3 + column].style.color = "#72CFF9";
+    } else {
+      cell[row * 3 + column].style.color = "#DCBF3F";
+    }
     cell[row * 3 + column].textContent = symbol;
   };
 
