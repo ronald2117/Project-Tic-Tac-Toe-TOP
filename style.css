@@ -40,6 +40,40 @@ body {
   border-radius: 30px;
 }
 
+.inner-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.scores-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 18px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 500;
+  font-size: smaller;
+}
+
+.scores-section > div {
+  width: 80px;
+  height: 80px;
+  border-radius: 6%;
+  text-align: center;
+}
+
+.p1-score-container {
+  background-color: #48D2FE;
+}
+
+.draw-score-container {
+  background-color: #BCDBF9;
+}
+
+.p2-score-container {
+  background-color: #E2BE00;
+}
+
 .game-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -47,6 +81,7 @@ body {
   height: 300px;
   border: 2px solid black;
 }
+
 
 .game-board > div {
   width: 100px;
