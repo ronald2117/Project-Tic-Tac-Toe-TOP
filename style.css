@@ -110,6 +110,13 @@ body {
   background-color: #5A1E76;
 }
 
+.new-game-btn {
+  padding: 13px 80px;
+  border-radius: 6px;
+  background-color: #F4F6F5;
+  margin-top: 20px;
+}
+
 .game-title {
   position: absolute;
   bottom: 0;
