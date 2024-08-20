@@ -60,6 +60,21 @@ body {
   height: 80px;
   border-radius: 6%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scores-section > div > * {
+  margin: 0;
+}
+
+.scores-section > div > .score {
+  font-family: "Inter", sans-serif;
+  font-size: 21px;
+  margin-top: 5px;
+  font-weight: 700  ;
 }
 
 .p1-score-container {
