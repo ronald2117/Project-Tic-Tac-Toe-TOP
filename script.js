@@ -77,7 +77,7 @@ function Gameboard() {
     }
   }
 
-  return { getBoard, putSymbol, clearBoard, checkForWinner };
+  return { getBoard, addSymbol, clearBoard, checkForWinner };
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
@@ -129,24 +129,40 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     return firstPlayer;
   }
 
-  const nextPlayerTurn = () =>
+  const newTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
   const newRound = () => {
     gameOver = false;
     winner = null;
-    currentPlayer.symbol = currentPlayer.symbol == "X" ? "O" : "X";
-    firstPlayer =
+    players[0].symbol = players[0].symbol === "X" ? "O" : "X";
+    players[1].symbol = players[1].symbol === "X" ? "O" : "X";
+    firstPlayer = firstPlayer == players[0] ? players[1] : players[0];
+  }
+
+  const resetGame = () => {
+    players[0].score = 0;
+    players[1].score = 0;
+    drawScore = 0;
+    board.clearBoard();
+    gameOver = false;
+    winner = null;
+    currentPlayer = players[0];
+    firstPlayer = players[0];
   }
 
   return {
-    checkForWinner,
-    nextRound,
-    createEmptyBoard,
-    initializeGame,
+    getP1Score,
+    getP2Score,
+    getDrawScore,
+    IsGameOver,
+    getWinner,
+    getCurrentPlayer,
+    getFirstPlayer,
+    newTurn,
+    newRound,
+    resetGame,
     getBoard: board.getBoard,
-    currentPlayer,
-    putSymbol,
   };
 }
 
@@ -177,13 +193,14 @@ function ScreenController() {
   const cell = document.querySelectorAll(".cell");
   const p1score = document.querySelector(".p1-score");
   const p2Score = document.querySelector(".p2-score");
+  const drawScore = document.querySelector(".draw-score");
   const game = GameController();
   const gameBoardDiv = document.querySelector(".game-board");
 
-  const clearScreen = () => {
-    cell.forEach((cell) => (cell.textContent = ""));
-    
-  };
+  const updateBoard = () => {
+    for(let i = 0; i < gameBoardDiv.children.length; i++) {
+      
+  }
   
   const addSymbolToCell = (row, column, symbol) => {
     if (symbol == "X") {
