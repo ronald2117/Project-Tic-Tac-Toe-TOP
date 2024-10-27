@@ -145,6 +145,9 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
         oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() && // Check if symbols at 'a' and 'b' are equal
         oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol() // Check if symbols at 'a' and 'c' are equal
       ) {
+        currentPlayer.score++;
+        winner = currentPlayer.name;
+        gameOver = true;
         return true;
       } else {
         return false;
