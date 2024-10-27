@@ -133,7 +133,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const nextTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
-  const newRound = () => {
+  const nextRound = () => {
     gameOver = false;
     winner = null;
     players[0].symbol = players[0].symbol === "X" ? "O" : "X";
@@ -161,7 +161,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     getCurrentPlayer,
     getFirstPlayer,
     nextTurn,
-    newRound,
+    nextRound,
     resetGame,
     getBoard: board.getBoard,
   };
