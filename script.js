@@ -26,8 +26,6 @@ function Gameboard() {
     board[i] = [];
     for (let j = 0; j < 3; j++) {
       board[i].push(Cell());
-
-
     }
   }
 
@@ -227,6 +225,7 @@ function ScreenController() {
       }
     });
   });
+  }
 }
 
 ConsoleController();
