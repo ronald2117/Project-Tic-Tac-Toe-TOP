@@ -63,14 +63,13 @@ function Gameboard() {
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
       if (
-        oneDimensionalBoard[a].getSymbol() &&
-        oneDimensionalBoard[a].getSymbol() ===
-          oneDimensionalBoard[b].getSymbol() &&
-        oneDimensionalBoard[a].getSymbol() ===
-          oneDimensionalBoard[c].getSymbol()
+        oneDimensionalBoard[a].getSymbol() && // Check if the symbol at index 'a' is not empty
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() && // Check if symbols at 'a' and 'b' are equal
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol() // Check if symbols at 'a' and 'c' are equal
       ) {
-        winner = currentPlayer.name;
-        gameOver = true;
+        return true;
+      } else {
+        return false;
       }
     }
   }
