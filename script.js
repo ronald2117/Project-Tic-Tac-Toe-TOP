@@ -47,34 +47,7 @@ function Gameboard() {
     }
   }
 
-  function checkForWinner(board) {
-    const oneDimensionalBoard = board.flat();
-    const winningCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8], // rows
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8], // columns
-      [0, 4, 8],
-      [2, 4, 6], // diagonals
-    ];
-
-    for (let i = 0; i < winningCombinations.length; i++) {
-      const [a, b, c] = winningCombinations[i];
-      if (
-        oneDimensionalBoard[a].getSymbol() && // Check if the symbol at index 'a' is not empty
-        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() && // Check if symbols at 'a' and 'b' are equal
-        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol() // Check if symbols at 'a' and 'c' are equal
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-
-  return { getBoard, addSymbol, clearBoard, checkForWinner };
+  return { getBoard, addSymbol, clearBoard };
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
@@ -152,6 +125,33 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     firstPlayer = players[0];
   }
 
+  function checkForWinner(board) {
+    const oneDimensionalBoard = board.flat();
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // columns
+      [0, 4, 8],
+      [2, 4, 6], // diagonals
+    ];
+
+    for (let i = 0; i < winningCombinations.length; i++) {
+      const [a, b, c] = winningCombinations[i];
+      if (
+        oneDimensionalBoard[a].getSymbol() && // Check if the symbol at index 'a' is not empty
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() && // Check if symbols at 'a' and 'b' are equal
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol() // Check if symbols at 'a' and 'c' are equal
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   return {
     getP1Score,
     getP2Score,
@@ -164,6 +164,8 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     nextRound,
     resetGame,
     getBoard: board.getBoard,
+    putSymbol: board.addSymbol,
+    checkForWinner
   };
 }
 
