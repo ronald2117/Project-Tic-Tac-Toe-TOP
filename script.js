@@ -98,6 +98,14 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   let currentPlayer = players[0];
   let firstPlayer = players[0];
 
+  const getPlayerOneName = () => {
+    return players[0].name;
+  }
+
+  const getPlayerTwoName = () => {
+    return players[1].name;
+  }
+
   const getP1Score = () => {
     return players[0].score;
   }
@@ -121,11 +129,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const getCurrentPlayer = () => {
     return currentPlayer;
   }
-
-  const getFirstPlayer = () => {
-    return firstPlayer;
-  }
-
+  
   const newTurn = () =>
     (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
 
