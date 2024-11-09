@@ -162,7 +162,6 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     IsGameOver,
     getWinner,
     getCurrentPlayer,
-    getFirstPlayer,
     nextTurn,
     nextRound,
     resetGame,
