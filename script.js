@@ -109,8 +109,6 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   const nextRound = () => {
     gameOver = false;
     winner = null;
-    players[0].symbol = players[0].symbol === "X" ? "O" : "X";
-    players[1].symbol = players[1].symbol === "X" ? "O" : "X";
     firstPlayer = firstPlayer == players[0] ? players[1] : players[0];
   }
 
