@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <style>
         .material-symbols-outlined {
             font-variation-settings:
@@ -17,22 +21,44 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Tic Tac Toe</h1>
-        <div class="player1"><div class="p1-score"></div></div>
-        <div class="game-board-div">
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
+    <div class="body">
+        <div class="game-container">
+            <div class="inner-container">
+                <div class="scores-section">
+                    <div class="p1-score-container">
+                        <p>PLAYER 1</p>
+                        <p class="p1-score score">0</p>
+                    </div>
+                    <div class="draw-score-container">
+                        <p>DRAW</p>
+                        <p class="draw-score score">0</p>
+                    </div>
+                    <div class="p2-score-container">
+                        <p>PLAYER 2</p>
+                        <p class="p2-score score">0</p>
+                    </div>
+                </div>
+                <div class="game-board">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="controller">
+                    <div class="greet"></div>
+                    <div class="turn-indicator"></div>
+                    <div class="new-game-btn">New Game</div>
+                </div>
+            </div>
         </div>
-        <div class="player2"><div class="p2-score"></div></div>
-        <div class="menu"><span class="material-symbols-outlined">Menu</span></div>
+        <div class="game-title"><div class="yellow-txt">tic.</div><div class="blue-txt">tac.</d><div class="yellow-txt">toe.</div></div>
+    </div>
+    <div class="restart-btn">Restart</div>
     <script src="script.js"></script>
 </body>
 </html>

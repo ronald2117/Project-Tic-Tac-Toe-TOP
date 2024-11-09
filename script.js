@@ -3,11 +3,7 @@ function Cell() {
 
   const getSymbol = () => symbol;
 
-  const setSymbol = (newSymbol) => {
-    symbol = newValue;
-  };
-
-  const addSymbol = (newSymbol) => {
+  const putSymbol = (newSymbol) => {
     if (symbol === null) {
       symbol = newSymbol;
       return true;
@@ -16,7 +12,11 @@ function Cell() {
     }
   };
 
-  return { getSymbol, addSymbol };
+  const removeSymbol = () => {
+    symbol = null;
+  };
+
+  return { getSymbol, putSymbol };
 }
 
 function Gameboard() {
@@ -31,15 +31,23 @@ function Gameboard() {
 
   const getBoard = () => board;
 
-  const putSymbol = (row, column, playerSymbol) => {
+  const addSymbol = (row, column, playerSymbol) => {
     if (row >= 0 && row < 3 && column >= 0 && column < 3) {
-      board[row][column].addSymbol(playerSymbol);
+      board[row][column].putSymbol(playerSymbol);
     } else {
       throw new Error("Invalid row or column");
     }
   };
 
-  return { getBoard, putSymbol };
+  const clearBoard = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        board[i][j].removeSymbol();
+      }
+    }
+  }
+
+  return { getBoard, addSymbol, clearBoard };
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
@@ -56,23 +64,66 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     },
   ];
 
+  let drawScore = 0;
   const board = Gameboard();
   let winner = null;
   let gameOver = false;
   let currentPlayer = players[0];
-  let numberOfRounds = 1;
+  let firstPlayer = players[0];
+
+  const getPlayerOneName = () => {
+    return players[0].name;
+  }
+
+  const getPlayerTwoName = () => {
+    return players[1].name;
+  }
+
+  const getP1Score = () => {
+    return players[0].score;
+  }
+
+  const getP2Score = () => {
+    return players[1].score;
+  }
+
+  const getDrawScore = () => {
+    return drawScore;
+  }
+
+  const IsGameOver = () => {
+    return gameOver;
+  }
 
   const getWinner = () => {
     return winner;
-  };
+  }
 
-  const setWinner = (playerName) => {
-    winner = playerName;
-  };
+  const getCurrentPlayer = () => {
+    return currentPlayer;
+  }
 
-  const getNumberOfRounds = () => {
-    return numberOfRounds;
-  };
+  const nextTurn = () =>
+    (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
+
+  const nextRound = () => {
+    gameOver = false;
+    winner = null;
+    players[0].symbol = players[0].symbol === "X" ? "O" : "X";
+    players[1].symbol = players[1].symbol === "X" ? "O" : "X";
+    firstPlayer = firstPlayer == players[0] ? players[1] : players[0];
+  }
+
+  const resetGame = () => {
+    players[0].score = 0;
+    players[1].score = 0;
+    drawScore = 0;
+    board.clearBoard();
+    gameOver = false;
+    winner = null;
+    currentPlayer = players[0];
+    firstPlayer = players[0];
+  }
 
   function checkForWinner(board) {
     const oneDimensionalBoard = board.flat();
@@ -90,81 +141,79 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
       if (
-        oneDimensionalBoard[a].getSymbol() &&
-        oneDimensionalBoard[a].getSymbol() ===
-          oneDimensionalBoard[b].getSymbol() &&
-        oneDimensionalBoard[a].getSymbol() ===
-          oneDimensionalBoard[c].getSymbol()
+        oneDimensionalBoard[a].getSymbol() && // Check if the symbol at index 'a' is not empty
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[b].getSymbol() && // Check if symbols at 'a' and 'b' are equal
+        oneDimensionalBoard[a].getSymbol() === oneDimensionalBoard[c].getSymbol() // Check if symbols at 'a' and 'c' are equal
       ) {
-        setWinner(currentPlayer.name);
+        currentPlayer.score++;
+        winner = currentPlayer.name;
         gameOver = true;
+        return true;
+      } else {
+        return false;
       }
     }
   }
 
-  const switchPlayerSymbol = () => {
-    players[0].symbol = players[0].symbol == "X" ? "O" : "X";
-    players[1].symbol = players[1].symbol == "O" ? "X" : "O";
+  return {
+    getP1Score,
+    getP2Score,
+    getDrawScore,
+    IsGameOver,
+    getWinner,
+    getCurrentPlayer,
+    getFirstPlayer,
+    nextTurn,
+    nextRound,
+    resetGame,
+    getBoard: board.getBoard,
+    putSymbol: board.addSymbol,
+    checkForWinner
   };
+}
 
-  const switchPlayerTurn = () =>
-    (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
+function ConsoleController() {
+  game = GameController();
 
-  const nextRound = () => {
-    switchPlayerTurn();
-    switchPlayerSymbol();
-  };
-
-  const createEmptyBoard = () => {
+  const printBoard = () => {
+    const board = game.getBoard();
     for (let i = 0; i < board.length; i++) {
+      let row = "";
       for (let j = 0; j < board[i].length; j++) {
-        board[i][j].setValue("");
+        row += board[i][j].getSymbol() || " ";
+        if (j < board[i].length - 1) {
+          row += " | ";
+        }
+      }
+      console.log(row);
+      if (i < board.length - 1) {
+        console.log("---------");
       }
     }
   };
 
-  const initializeGame = () => {
-    setBoard(createEmptyBoard());
-    setWinner(null);
-    gameOver = false;
-  };
-
-  const putSymbol = (row, column, symbol) => {
-    if (gameOver) {
-      return;
-    }
-    board.putSymbol(row, column, symbol);
-  };
-
-  return {
-    getWinner,
-    setWinner,
-    checkForWinner,
-    switchPlayerTurn,
-    nextRound,
-    createEmptyBoard,
-    initializeGame,
-    getBoard: board.getBoard,
-    currentPlayer,
-    putSymbol,
-  };
+  printBoard();
 }
 
 function ScreenController() {
   const cell = document.querySelectorAll(".cell");
   const p1score = document.querySelector(".p1-score");
   const p2Score = document.querySelector(".p2-score");
+  const drawScore = document.querySelector(".draw-score");
   const game = GameController();
-  const p1Name = document.querySelector(".player1");
-  const p2Name = document.querySelector(".player2");
-  const gameBoardDiv = document.querySelector(".game-board-div");
+  const gameBoardDiv = document.querySelector(".game-board");
 
-  const clearScreen = () => {
-    cell.forEach((cell) => (cell.textContent = ""));
-    
-  };
-
+  const updateBoard = () => {
+    for(let i = 0; i < gameBoardDiv.children.length; i++) {
+      
+  }
+  
   const addSymbolToCell = (row, column, symbol) => {
+    if (symbol == "X") {
+      cell[row * 3 + column].style.color = "#72CFF9";
+    } else if (symbol == "O"){
+      cell[row * 3 + column].style.color = "#DCBF3F";
+    }
     cell[row * 3 + column].textContent = symbol;
   };
 
@@ -184,7 +233,7 @@ function ScreenController() {
       }
     });
   });
+  }
 }
 
-const game = GameController();
-ScreenController();
+ConsoleController();
