@@ -47,7 +47,7 @@ function Gameboard() {
     }
   };
 
-  return { getBoard, addSymbol, clearBoard, resetBoard };
+  return { getBoard, addSymbol, clearBoard };
 }
 
 function GameController(p1Name = "Player One", p2Name = "Player Two") {
@@ -236,6 +236,7 @@ function ConsoleController() {
       if (game.getWinner()) {
         console.log(game.getWinner() + " won the game!");
         game.nextRound();
+        game.clearBoard();
         displayGame();
       } else {
         game.nextTurn();
