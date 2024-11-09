@@ -175,20 +175,25 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
 
 function ConsoleController() {
   game = GameController();
-
+  
   const printBoard = () => {
     const board = game.getBoard();
     for (let i = 0; i < board.length; i++) {
-      let row = "";
+      let boardRow = "";
       for (let j = 0; j < board[i].length; j++) {
-        row += board[i][j].getSymbol() || " ";
+        if (board[i][j].getSymbol() === null) {
+          boardRow += "   ";
+        } else {
+          boardRow += (" " + board[i][j].getSymbol() + " ");
+        }
+
         if (j < board[i].length - 1) {
-          row += " | ";
+          boardRow += "|";
         }
       }
-      console.log(row);
+      console.log(boardRow);
       if (i < board.length - 1) {
-        console.log("---------");
+        console.log("---+---+---");
       }
     }
   };
