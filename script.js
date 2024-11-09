@@ -219,6 +219,34 @@ function ConsoleController() {
     });
   }
 
+  const displayGame = () => {
+    console.clear();
+    
+    //print each player score and the draw score
+    console.log(game.getPlayerOneName() + " Score: " + game.getP1Score());
+    console.log(game.getPlayerTwoName() + " Score: " + game.getP2Score());
+    console.log("Draw: " + game.getDrawScore());
+    printBoard();
+
+    //display current player's turn
+    console.log("\n" +game.getCurrentPlayer().name+ "'s turn " + "(" + game.getCurrentPlayer().symbol + ")");
+
+    //prompt user to enter row and column
+    prompt.get(["row", "column"], (err, result) => {
+      game.putSymbol(result.row, result.column, game.getCurrentPlayer().symbol);
+      game.checkForWinner(game.getBoard());
+      if (game.getWinner()) {
+        console.log(game.getWinner() + " won the game!");
+        game.nextRound();
+        displayGame();
+      } else {
+        game.nextTurn();
+        displayGame();
+      }
+    });
+    
+  }
+
   displayMainMenu();
 }
 
