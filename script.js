@@ -156,6 +156,8 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
   }
 
   return {
+    getPlayerOneName,
+    getPlayerTwoName,
     getP1Score,
     getP2Score,
     getDrawScore,
