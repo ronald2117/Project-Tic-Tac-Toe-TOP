@@ -174,6 +174,9 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
 }
 
 function ConsoleController() {
+  const prompt = require('prompt');
+  
+  
   game = GameController();
   
   const printBoard = () => {
@@ -198,7 +201,25 @@ function ConsoleController() {
     }
   };
 
-  printBoard();
+  const displayMainMenu = () => {
+    prompt.start();
+    console.log("Welcome to Tic Tac Toe!");
+    console.log("1. Start Game");
+    console.log("2. Exit");
+
+    prompt.get(["choice"], (err, result) => {
+      if (result.choice === "1") {
+        displayGame();
+      } else if (result.choice === "2") {
+        return;
+      } else {
+        console.log("Invalid choice. Please try again.");
+        displayMainMenu();
+      }
+    });
+  }
+
+  displayMainMenu();
 }
 
 function ScreenController() {
