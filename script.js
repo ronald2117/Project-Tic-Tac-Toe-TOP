@@ -183,13 +183,21 @@ function ScreenController() {
   const updateBoard = () => {
     for (let i = 0; i < gameBoardDiv.children.length; i++) {}
   };
+
   const addSymbolToCell = (row, column, symbol) => {
-    cell[row * 3 + column].textContent = symbol;
+    if (cell[row * 3 + column].textContent == "") {
+      cell[row * 3 + column].textContent = symbol;
+    } else {
+      return;
+    }
+    // Change the color of the symbol based on the player
     if (symbol == "X") {
       cell[row * 3 + column].style.color = "#72CFF9";
     } else if (symbol == "O"){
       cell[row * 3 + column].style.color = "#DCBF3F";
     }
+
+    game.nextTurn();
   };
 
   const start = () => {
@@ -199,7 +207,6 @@ function ScreenController() {
         const column = index % 3;
         game.putSymbol(row, column, game.getCurrentPlayer().symbol);
         addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
-        game.nextTurn();
         game.checkForWinner(game.getBoard());
         if (game.getWinner()) {
           alert(`${game.getWinner()} won the game!`);
