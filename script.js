@@ -16,7 +16,7 @@ function Cell() {
     symbol = null;
   };
 
-  return { getSymbol, putSymbol };
+  return { getSymbol, putSymbol, removeSymbol };
 }
 
 function Gameboard() {
@@ -33,7 +33,7 @@ function Gameboard() {
 
   const addSymbol = (row, column, playerSymbol) => {
     if (row >= 0 && row < 3 && column >= 0 && column < 3) {
-      board[row][column] = playerSymbol;
+      return board[row][column].putSymbol(playerSymbol);
     } else {
       throw new Error("Invalid row or column");
     }
@@ -123,8 +123,8 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
     firstPlayer = players[0];
   };
 
-  function checkForWinner(board) {
-    const oneDimensionalBoard = board.flat();
+  function checkForWinner() {
+    const oneDimensionalBoard = board.getBoard().flat();
     const winningCombinations = [
       [0, 1, 2],
       [3, 4, 5],
@@ -135,7 +135,8 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
       [0, 4, 8],
       [2, 4, 6], // diagonals
     ];
-    for (let i = 0; i < winningCombinations.length; i++) {
+
+    for (let i = 0; i < winningCombinations.length; i++) { 
       const [a, b, c] = winningCombinations[i];
       if (
         oneDimensionalBoard[a].getSymbol() && // Check if the symbol at index 'a' is not empty
@@ -146,6 +147,7 @@ function GameController(p1Name = "Player One", p2Name = "Player Two") {
       ) {
         currentPlayer.score++;
         winner = currentPlayer.name;
+        console.log(winner + " won the game!");
         gameOver = true;
         return true;
       } else {
@@ -207,7 +209,7 @@ function ScreenController() {
         const column = index % 3;
         game.putSymbol(row, column, game.getCurrentPlayer().symbol);
         addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
-        game.checkForWinner(game.getBoard());
+        game.checkForWinner();
         if (game.getWinner()) {
           alert(`${game.getWinner()} won the game!`);
           game.initializeGame();
