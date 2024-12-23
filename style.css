@@ -117,6 +117,11 @@ body {
   border-radius: 6px;
   background-color: #F4F6F5;
   margin-top: 20px;
+  cursor: pointer;
+}
+
+.new-game-btn:hover {
+  background-color: #C5A0D7;
 }
 
 .game-title {

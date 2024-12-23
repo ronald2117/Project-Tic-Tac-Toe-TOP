@@ -182,6 +182,7 @@ function ScreenController() {
   const drawScore = document.querySelector(".draw-score");
   const game = GameController();
   const gameBoardDiv = document.querySelector(".game-board");
+  const newGameBtn = document.querySelector(".new-game-btn");
 
   const updateBoard = () => {
     for (let i = 0; i < gameBoardDiv.children.length; i++) {}
@@ -207,7 +208,9 @@ function ScreenController() {
     game.nextTurn();
   };
 
-  const start = () => {
+  const newGameBtnClick = () => {
+    game.resetGame();
+
     cell.forEach((cell, index) => {
       cell.addEventListener("click", () => {
         const row = Math.floor(index / 3);
@@ -215,6 +218,12 @@ function ScreenController() {
         addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
       });
     });
+
+    newGameBtn.style.display = 'none';
+  }
+
+  const start = () => {
+    newGameBtn.addEventListener("click", newGameBtnClick);
   }
 
   return { start };
