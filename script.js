@@ -188,6 +188,10 @@ function ScreenController() {
   };
 
   const addSymbolToCell = (row, column, symbol) => {
+    if (game.IsGameOver()) { return };
+
+    game.putSymbol(row, column, game.getCurrentPlayer().symbol);
+
     if (cell[row * 3 + column].textContent == "") {
       cell[row * 3 + column].textContent = symbol;
     } else {
@@ -208,15 +212,7 @@ function ScreenController() {
       cell.addEventListener("click", () => {
         const row = Math.floor(index / 3);
         const column = index % 3;
-        game.putSymbol(row, column, game.getCurrentPlayer().symbol);
         addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
-        if (game.getWinner()) {
-          alert(`${game.getWinner()} won the game!`);
-          game.initializeGame();
-          clearScreen();
-        } else {
-          game.nextRound();
-        }
       });
     });
   }
