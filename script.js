@@ -50,7 +50,7 @@ function Gameboard() {
   return { getBoard, addSymbol, clearBoard };
 }
 
-function GameController(p1Name = "Player One", p2Name = "Player Two") {
+function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   const players = [
     {
       name: p1Name,
@@ -183,6 +183,7 @@ function ScreenController() {
   const game = GameController();
   const gameBoardDiv = document.querySelector(".game-board");
   const newGameBtn = document.querySelector(".new-game-btn");
+  const playerTurnIndicator = document.querySelector(".player-turn-indicator");
 
   const updateBoard = () => {
     for (let i = 0; i < gameBoardDiv.children.length; i++) {}
@@ -196,13 +197,26 @@ function ScreenController() {
     if (cell[row * 3 + column].textContent == "") {
       cell[row * 3 + column].textContent = symbol;
     } else {
-      return;
+      return; 
     }
     // Change the color of the symbol based on the player
     if (symbol == "X") {
       cell[row * 3 + column].style.color = "#72CFF9";
     } else if (symbol == "O"){
       cell[row * 3 + column].style.color = "#DCBF3F";
+    }
+
+    //Change the player turn indicator div depending on who's turn
+    if (game.getCurrentPlayer().symbol == "X") {
+      playerTurnIndicator.style.background = "#DCBF3F";
+    } else if (game.getCurrentPlayer().symbol == "O") {
+      playerTurnIndicator.style.background = "#72CFF9";
+    }
+
+    if (game.getCurrentPlayer().name == "Player 1") {
+      playerTurnIndicator.innerHTML = "Player 2 turn"
+    } else if (game.getCurrentPlayer().name == "Player 2") {
+      playerTurnIndicator.innerHTML = "Player 1 turn";
     }
 
     game.nextTurn();
@@ -220,10 +234,24 @@ function ScreenController() {
     });
 
     newGameBtn.style.display = 'none';
+
+    playerTurnIndicator.style.display = 'flex';
   }
 
   const start = () => {
     newGameBtn.addEventListener("click", newGameBtnClick);
+
+    if (game.getCurrentPlayer().symbol == "X") {
+      playerTurnIndicator.style.background = "#72CFF9";
+    } else if (game.getCurrentPlayer().symbol == "O") {
+      playerTurnIndicator.style.background = "#DCBF3F";
+    }
+
+    if (game.getCurrentPlayer().name == "Player 1") {
+      playerTurnIndicator.innerHTML = "Player 1 turn"
+    } else if (game.getCurrentPlayer().name == "Player 2") {
+      playerTurnIndicator.innerHTML = "Player 2 turn";
+    }
   }
 
   return { start };

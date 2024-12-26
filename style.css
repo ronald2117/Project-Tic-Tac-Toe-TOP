@@ -39,7 +39,8 @@ body {
   padding: 50px;
   border-radius: 30px;
   z-index: 2;
-  opacity: 0.8;
+  opacity: 0.9;
+  max-width: 380px;
 }
 
 .inner-container {
@@ -112,12 +113,24 @@ body {
   background-color: #5A1E76;
 }
 
-.new-game-btn {
-  padding: 13px 80px;
+.new-game-btn, .player-turn-indicator {
+  margin-top: 20px;
+  width: 270px;
+  height: 50px;
   border-radius: 6px;
   background-color: #F4F6F5;
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-game-btn {
   cursor: pointer;
+}
+
+.player-turn-indicator {
+  background-color: #48D2FE;
+  display: none;
 }
 
 .new-game-btn:hover {
