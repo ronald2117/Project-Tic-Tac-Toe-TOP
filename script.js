@@ -203,19 +203,9 @@ function ScreenController() {
   const addSymbolToCell = (row, column, symbol) => {
     if (game.IsGameOver()) { return };
 
-    game.putSymbol(row, column, game.getCurrentPlayer().symbol);
+    game.putSymbol(row, column, symbol);
 
-    if (cell[row * 3 + column].textContent == "") {
-      cell[row * 3 + column].textContent = symbol;
-    } else {
-      return; 
-    }
-    // Change the color of the symbol based on the player
-    if (symbol == "X") {
-      cell[row * 3 + column].style.color = "#72CFF9";
-    } else if (symbol == "O"){
-      cell[row * 3 + column].style.color = "#DCBF3F";
-    }
+    updateBoard();
 
     //Change the player turn indicator div depending on who's turn
     if (game.getCurrentPlayer().symbol == "X") {
@@ -250,8 +240,24 @@ function ScreenController() {
     game.nextTurn();
   };
 
+  const updateBoard = () => {
+    oneDimensionalBoard = game.getBoard().flat();
+
+    for (let i = 0; i < oneDimensionalBoard.length; i++) {
+      const cellSymbol = oneDimensionalBoard[i].getSymbol()
+      cell[i].textContent = cellSymbol;
+
+      if(cellSymbol == "X") {
+        cell[i].style.color = "#72CFF9"
+      } else {
+        cell[i].style.color = "#DCBF3F"
+      }
+    }
+  }
+
   const newGameBtnClick = () => {
     game.resetGame();
+    updateBoard();
 
     cell.forEach((cell, index) => {
       cell.addEventListener("click", () => {
