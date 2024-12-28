@@ -205,7 +205,7 @@ function ScreenController() {
 
     game.putSymbol(row, column, symbol);
 
-    updateBoard();
+    updateBoardDisplay();
 
     //Change the player turn indicator div depending on who's turn
     if (game.getCurrentPlayer().symbol == "X") {
@@ -240,7 +240,7 @@ function ScreenController() {
     game.nextTurn();
   };
 
-  const updateBoard = () => {
+  const updateBoardDisplay = () => {
     oneDimensionalBoard = game.getBoard().flat();
 
     for (let i = 0; i < oneDimensionalBoard.length; i++) {
@@ -257,7 +257,7 @@ function ScreenController() {
 
   const newGameBtnClick = () => {
     game.resetGame();
-    updateBoard();
+    updateBoardDisplay();
 
     cell.forEach((cell, index) => {
       cell.addEventListener("click", () => {
