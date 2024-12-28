@@ -65,6 +65,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   ];
 
   let drawScore = 0;
+  let draw = false;
   const board = Gameboard();
   let winner = null;
   let gameOver = false;
@@ -94,6 +95,10 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   const IsGameOver = () => {
     return gameOver;
   };
+
+  const isDraw = () => {
+    return draw;
+  }
 
   const getWinner = () => {
     return winner;
@@ -148,11 +153,19 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
         return true;
       }
     }
+
+    // Check if every item in the array is not null
+    const allNotNull = oneDimensionalBoard.every(cell => cell.getSymbol() !== null);
+
+    if (allNotNull) {
+      draw = true;
+      drawScore++;
+      gameOver = true;
+      return false;
+    }
   }
 
   function putSymbol(row, column, symbol) {
-    console.log();
-
     board.addSymbol(row, column, symbol);
     checkForWinner();
   }
@@ -172,6 +185,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     getBoard: board.getBoard,
     putSymbol,
     checkForWinner,
+    isDraw
   };
 }
 
@@ -184,6 +198,8 @@ function ScreenController() {
   const gameBoardDiv = document.querySelector(".game-board");
   const newGameBtn = document.querySelector(".new-game-btn");
   const playerTurnIndicator = document.querySelector(".player-turn-indicator");
+  const winIndicator = document.querySelector(".win-indicator");
+  const drawIndicator = document.querySelector(".draw-indicator");
 
   const updateBoard = () => {
     for (let i = 0; i < gameBoardDiv.children.length; i++) {}
@@ -219,6 +235,23 @@ function ScreenController() {
       playerTurnIndicator.innerHTML = "Player 1 turn";
     }
 
+    if (game.IsGameOver()) {
+      if (!game.isDraw()) {
+        winIndicator.style.display = 'flex';
+        winIndicator.innerHTML = game.getWinner() + " won"
+      } else {
+        drawIndicator.style.display = 'flex';
+      }
+
+      playerTurnIndicator.style.display = 'none';
+      newGameBtn.style.display = 'flex';
+
+      //update scoreboard
+      p1score.textContent = game.getP1Score();
+      p2Score.textContent = game.getP2Score();
+      drawScore.textContent = game.getDrawScore();
+    }
+
     game.nextTurn();
   };
 
@@ -234,6 +267,7 @@ function ScreenController() {
     });
 
     newGameBtn.style.display = 'none';
+
 
     playerTurnIndicator.style.display = 'flex';
   }

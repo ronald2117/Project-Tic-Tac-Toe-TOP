@@ -113,12 +113,11 @@ body {
   background-color: #5A1E76;
 }
 
-.new-game-btn, .player-turn-indicator {
+.new-game-btn, .player-turn-indicator, .win-indicator, .draw-indicator {
   margin-top: 20px;
   width: 270px;
   height: 50px;
   border-radius: 6px;
-  background-color: #F4F6F5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,6 +125,17 @@ body {
 
 .new-game-btn {
   cursor: pointer;
+  background-color: #F4F6F5;
+}
+
+.win-indicator {
+  background-color: green;
+  display: none;
+}
+
+.draw-indicator {
+  background-color: #BCDBF9;
+  display: none;
 }
 
 .player-turn-indicator {
