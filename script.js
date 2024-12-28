@@ -195,15 +195,10 @@ function ScreenController() {
   const p2Score = document.querySelector(".p2-score");
   const drawScore = document.querySelector(".draw-score");
   const game = GameController();
-  const gameBoardDiv = document.querySelector(".game-board");
   const newGameBtn = document.querySelector(".new-game-btn");
   const playerTurnIndicator = document.querySelector(".player-turn-indicator");
   const winIndicator = document.querySelector(".win-indicator");
   const drawIndicator = document.querySelector(".draw-indicator");
-
-  const updateBoard = () => {
-    for (let i = 0; i < gameBoardDiv.children.length; i++) {}
-  };
 
   const addSymbolToCell = (row, column, symbol) => {
     if (game.IsGameOver()) { return };
