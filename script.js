@@ -194,7 +194,6 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
       if (hasWinner) {
         currentPlayer.score++;
         winner = currentPlayer.name;
-        console.log(winner + " won the game!");
         gameOver = true;
         round++;
         return true;
@@ -274,7 +273,7 @@ function ScreenController() {
     if (game.IsGameOver()) {
       if (!game.isDraw()) {
         winIndicator.style.display = 'flex';
-        winIndicator.innerHTML = game.getWinner() + " won"
+        winIndicator.innerHTML = game.getWinner() + " Won"
       } else {
         drawIndicator.style.display = 'flex';
       }
