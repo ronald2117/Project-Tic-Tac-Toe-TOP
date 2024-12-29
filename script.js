@@ -256,13 +256,6 @@ function ScreenController() {
 
     updateBoardDisplay();
 
-    //Change the player turn indicator div depending on who's turn
-    // if (game.getCurrentPlayer().symbol == "X") {
-    //   playerTurnIndicator.style.background = "#DCBF3F";
-    // } else if (game.getCurrentPlayer().symbol == "O") {
-    //   playerTurnIndicator.style.background = "#72CFF9";
-    // }
-
     if (game.getCurrentPlayer().name == "Player 1") {
       playerTurnIndicator.innerHTML = "Player 2 turn"
       playerTurnIndicator.style.background = game.getP2Color();
