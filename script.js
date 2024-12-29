@@ -103,6 +103,14 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     return players[1].color;
   }
 
+  const getFirstPlayer = () => {
+    return firstPlayer;
+  }
+
+  const setFirstPlayer = (player) => {
+    firstPlayer = player;
+  }
+
   const getXColor = () => {
     return xColor;
   }
@@ -209,6 +217,8 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     getP1Color,
     getP2Color,
     getDrawScore,
+    getFirstPlayer,
+    setFirstPlayer,
     IsGameOver,
     getWinner,
     getCurrentPlayer,
@@ -222,7 +232,9 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     blue,
     yellow,
     getXColor,
-    getOColor
+    getOColor,
+    setOColor,
+    setXColor
   };
 }
 
@@ -324,17 +336,9 @@ function ScreenController() {
   const start = () => {
     newGameBtn.addEventListener("click", newGameBtnClick);
 
-    if (game.getCurrentPlayer().symbol == "X") {
-      playerTurnIndicator.style.background = "#72CFF9";
-    } else if (game.getCurrentPlayer().symbol == "O") {
-      playerTurnIndicator.style.background = "#DCBF3F";
-    }
-
-    if (game.getCurrentPlayer().name == "Player 1") {
-      playerTurnIndicator.innerHTML = "Player 1 turn"
-    } else if (game.getCurrentPlayer().name == "Player 2") {
-      playerTurnIndicator.innerHTML = "Player 2 turn";
-    }
+    //Change initial backround color and text of player indicator depending on the first player
+    playerTurnIndicator.style.background = game.getFirstPlayer().color;
+    playerTurnIndicator.textContent = game.getFirstPlayer().name + " turn";
   }
 
   return { start };
