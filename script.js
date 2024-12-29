@@ -348,7 +348,7 @@ function ScreenController() {
     playerTurnIndicator.style.display = 'none';
     newGameBtn.style.display = 'flex';
 
-    updateGameBoardDisplay();
+    updateScoreBoardDisplay();
   }
 
   const start = () => {
