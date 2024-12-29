@@ -51,16 +51,21 @@ function Gameboard() {
 }
 
 function GameController(p1Name = "Player 1", p2Name = "Player 2") {
+  const blue = "#72CFF9";
+  const yellow = "#DCBF3F";
+
   const players = [
     {
       name: p1Name,
       symbol: "X",
       score: 0,
+      color: blue
     },
     {
       name: p2Name,
       symbol: "O",
       score: 0,
+      color: yellow
     },
   ];
 
@@ -71,6 +76,8 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   let gameOver = false;
   let currentPlayer = players[0];
   let firstPlayer = players[0];
+  let xColor = players[0].color;
+  let oColor = players[1].color;
 
   const getPlayerOneName = () => {
     return players[0].name;
@@ -87,6 +94,30 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   const getP2Score = () => {
     return players[1].score;
   };
+
+  const getP1Color = () => {
+    return players[0].color;
+  }
+
+  const getP2Color = () => {
+    return players[1].color;
+  }
+
+  const getXColor = () => {
+    return xColor;
+  }
+
+  const setXColor = (color) => {
+    xColor = color;
+  }
+
+  const getOColor = () => {
+    return oColor;
+  }
+
+  const setOColor = (color) => {
+    oColor = color;
+  }
 
   const getDrawScore = () => {
     return drawScore;
@@ -175,6 +206,8 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     getPlayerTwoName,
     getP1Score,
     getP2Score,
+    getP1Color,
+    getP2Color,
     getDrawScore,
     IsGameOver,
     getWinner,
@@ -185,7 +218,11 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     getBoard: board.getBoard,
     putSymbol,
     checkForWinner,
-    isDraw
+    isDraw,
+    blue,
+    yellow,
+    getXColor,
+    getOColor
   };
 }
 
@@ -208,16 +245,18 @@ function ScreenController() {
     updateBoardDisplay();
 
     //Change the player turn indicator div depending on who's turn
-    if (game.getCurrentPlayer().symbol == "X") {
-      playerTurnIndicator.style.background = "#DCBF3F";
-    } else if (game.getCurrentPlayer().symbol == "O") {
-      playerTurnIndicator.style.background = "#72CFF9";
-    }
+    // if (game.getCurrentPlayer().symbol == "X") {
+    //   playerTurnIndicator.style.background = "#DCBF3F";
+    // } else if (game.getCurrentPlayer().symbol == "O") {
+    //   playerTurnIndicator.style.background = "#72CFF9";
+    // }
 
     if (game.getCurrentPlayer().name == "Player 1") {
       playerTurnIndicator.innerHTML = "Player 2 turn"
+      playerTurnIndicator.style.background = game.getP2Color();
     } else if (game.getCurrentPlayer().name == "Player 2") {
       playerTurnIndicator.innerHTML = "Player 1 turn";
+      playerTurnIndicator.style.background = game.getP1Color();
     }
 
     if (game.IsGameOver()) {
@@ -246,11 +285,20 @@ function ScreenController() {
     for (let i = 0; i < oneDimensionalBoard.length; i++) {
       const cellSymbol = oneDimensionalBoard[i].getSymbol()
       cell[i].textContent = cellSymbol;
-
+      
+      //Change color of X and O depending on the color of each player
       if(cellSymbol == "X") {
-        cell[i].style.color = "#72CFF9"
+        if (game.getXColor() == game.blue) {
+          cell[i].style.color = game.blue;
+        } else {
+          cell[i].style.color = game.yellow;
+        }
       } else {
-        cell[i].style.color = "#DCBF3F"
+        if (game.getOColor()   == game.blue) {
+          cell[i].style.color = game.blue;
+        } else {
+          cell[i].style.color = game.yellow;
+        }
       }
     }
   }
