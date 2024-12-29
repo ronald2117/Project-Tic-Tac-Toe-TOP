@@ -330,10 +330,8 @@ function ScreenController() {
 
     playerTurnIndicator.style.display = 'flex';
     winIndicator.style.display = 'none';
-
-    if (game.getRound() > 1) {
-      game.nextRound();
-    }
+    drawIndicator.style.display = 'none';
+    game.nextRound();
 
     updateBoardDisplay();
   }
