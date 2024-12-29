@@ -69,6 +69,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     },
   ];
 
+  let round = 1;
   let drawScore = 0;
   let draw = false;
   const board = Gameboard();
@@ -79,6 +80,9 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   let xColor = players[0].color;
   let oColor = players[1].color;
 
+  const getRound = () => {
+    return round;
+  }
   const getPlayerOneName = () => {
     return players[0].name;
   };
@@ -147,13 +151,16 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     return currentPlayer;
   };
 
-  const nextTurn = () =>
-    (currentPlayer = currentPlayer == players[0] ? players[1] : players[0]);
+  const nextTurn = () => {
+    currentPlayer = currentPlayer == players[0] ? players[1] : players[0];
+  }
 
   const nextRound = () => {
+    board.clearBoard();
     gameOver = false;
     winner = null;
     firstPlayer = firstPlayer == players[0] ? players[1] : players[0];
+    currentPlayer = firstPlayer == players[0] ? players[1] : players[0];
   };
 
   const resetGame = () => {
@@ -189,6 +196,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
         winner = currentPlayer.name;
         console.log(winner + " won the game!");
         gameOver = true;
+        round++;
         return true;
       }
     }
@@ -199,6 +207,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     if (allNotNull) {
       draw = true;
       drawScore++;
+      round++;
       gameOver = true;
       return false;
     }
@@ -210,6 +219,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   }
 
   return {
+    getRound,
     getPlayerOneName,
     getPlayerTwoName,
     getP1Score,
@@ -233,8 +243,6 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     yellow,
     getXColor,
     getOColor,
-    setOColor,
-    setXColor
   };
 }
 
@@ -250,10 +258,9 @@ function ScreenController() {
   const drawIndicator = document.querySelector(".draw-indicator");
 
   const addSymbolToCell = (row, column, symbol) => {
-    if (game.IsGameOver()) { return };
-
+    if (game.IsGameOver() || game.getBoard()[row][column].getSymbol() != null) { return }; 
+    
     game.putSymbol(row, column, symbol);
-
     updateBoardDisplay();
 
     if (game.getCurrentPlayer().name == "Player 1") {
@@ -299,7 +306,7 @@ function ScreenController() {
           cell[i].style.color = game.yellow;
         }
       } else {
-        if (game.getOColor()   == game.blue) {
+        if (game.getOColor() == game.blue) {
           cell[i].style.color = game.blue;
         } else {
           cell[i].style.color = game.yellow;
@@ -309,21 +316,26 @@ function ScreenController() {
   }
 
   const newGameBtnClick = () => {
-    game.resetGame();
-    updateBoardDisplay();
-
-    cell.forEach((cell, index) => {
-      cell.addEventListener("click", () => {
-        const row = Math.floor(index / 3);
-        const column = index % 3;
-        addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
+    if (game.getRound() == 1) {
+      cell.forEach((cell, index) => {
+        cell.addEventListener("click", () => {
+          const row = Math.floor(index / 3);
+          const column = index % 3;
+          addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
+        });
       });
-    });
+    }
 
     newGameBtn.style.display = 'none';
 
-
     playerTurnIndicator.style.display = 'flex';
+    winIndicator.style.display = 'none';
+
+    if (game.getRound() > 1) {
+      game.nextRound();
+    }
+
+    updateBoardDisplay();
   }
 
   const start = () => {
