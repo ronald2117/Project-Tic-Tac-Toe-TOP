@@ -170,8 +170,8 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     board.clearBoard();
     gameOver = false;
     winner = null;
-    currentPlayer = players[0];
     firstPlayer = players[0];
+    currentPlayer = players[0];
   };
 
   function checkForWinner() {
@@ -252,6 +252,7 @@ function ScreenController() {
   const drawScore = document.querySelector(".draw-score");
   const game = GameController();
   const newGameBtn = document.querySelector(".new-game-btn");
+  const restartBtn = document.querySelector(".restart-btn")
   const playerTurnIndicator = document.querySelector(".player-turn-indicator");
   const winIndicator = document.querySelector(".win-indicator");
   const drawIndicator = document.querySelector(".draw-indicator");
@@ -280,15 +281,18 @@ function ScreenController() {
 
       playerTurnIndicator.style.display = 'none';
       newGameBtn.style.display = 'flex';
-
-      //update scoreboard
-      p1score.textContent = game.getP1Score();
-      p2Score.textContent = game.getP2Score();
-      drawScore.textContent = game.getDrawScore();
+      
+      updateScoreBoardDisplay();
     }
 
     game.nextTurn();
   };
+
+  const updateScoreBoardDisplay = () => {
+    p1score.textContent = game.getP1Score();
+    p2Score.textContent = game.getP2Score();
+    drawScore.textContent = game.getDrawScore();
+  }
 
   const updateBoardDisplay = () => {
     oneDimensionalBoard = game.getBoard().flat();
@@ -335,8 +339,21 @@ function ScreenController() {
     updateBoardDisplay();
   }
 
+  const restartBtnClick = () => {
+    game.resetGame();
+    updateBoardDisplay();
+
+    winIndicator.style.display = 'none';
+    drawIndicator.style.display = 'none';
+    playerTurnIndicator.style.display = 'none';
+    newGameBtn.style.display = 'flex';
+
+    updateGameBoardDisplay();
+  }
+
   const start = () => {
     newGameBtn.addEventListener("click", newGameBtnClick);
+    restartBtn.addEventListener("click", restartBtnClick);
 
     //Change initial backround color and text of player indicator depending on the first player
     playerTurnIndicator.style.background = game.getFirstPlayer().color;
