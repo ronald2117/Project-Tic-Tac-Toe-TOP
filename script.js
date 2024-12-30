@@ -69,7 +69,6 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     },
   ];
 
-  let gameOn = false;
   let round = 1;
   let drawScore = 0;
   let draw = false;
@@ -338,8 +337,8 @@ function ScreenController() {
     enableCellClick();
 
     newGameBtn.style.display = 'none';
-
     playerTurnIndicator.style.display = 'flex';
+    playerTurnIndicator.style.background = game.getFirstPlayer().color;
     winIndicator.style.display = 'none';
     drawIndicator.style.display = 'none';
     game.nextRound();
