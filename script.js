@@ -74,7 +74,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   let draw = false;
   const board = Gameboard();
   let winner = null;
-  let gameOver = false;
+  let gameOver = true;
   let currentPlayer = players[0];
   let firstPlayer = players[0];
   let xColor = players[0].color;
@@ -165,7 +165,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     drawScore = 0;
     round = 1;
     board.clearBoard();
-    gameOver = false;
+    gameOver = true;
     winner = null;
     firstPlayer = players[0];
     currentPlayer = players[0];
@@ -333,6 +333,7 @@ function ScreenController() {
 
   const newGameBtnClick = () => {
     enableCellClick();
+    game.setGameOver(false);
 
     newGameBtn.style.display = 'none';
     playerTurnIndicator.style.display = 'flex';
@@ -346,7 +347,7 @@ function ScreenController() {
 
   const restartBtnClick = () => {
     game.resetGame();
-    game.setGameOver(false);
+    game.setGameOver(true);
     
     winIndicator.style.display = 'none';
     drawIndicator.style.display = 'none';
