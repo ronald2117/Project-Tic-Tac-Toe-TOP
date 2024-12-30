@@ -119,16 +119,8 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     return xColor;
   }
 
-  const setXColor = (color) => {
-    xColor = color;
-  }
-
   const getOColor = () => {
     return oColor;
-  }
-
-  const setOColor = (color) => {
-    oColor = color;
   }
 
   const getDrawScore = () => {
@@ -137,6 +129,10 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
 
   const IsGameOver = () => {
     return gameOver;
+  };
+
+  const setGameOver = (status) => {
+    gameOver = status;
   };
 
   const isDraw = () => {
@@ -167,6 +163,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     players[0].score = 0;
     players[1].score = 0;
     drawScore = 0;
+    round = 1;
     board.clearBoard();
     gameOver = false;
     winner = null;
@@ -229,6 +226,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     getFirstPlayer,
     setFirstPlayer,
     IsGameOver,
+    setGameOver,
     getWinner,
     getCurrentPlayer,
     nextTurn,
@@ -348,6 +346,7 @@ function ScreenController() {
 
   const restartBtnClick = () => {
     game.resetGame();
+    game.setGameOver(false);
     
     winIndicator.style.display = 'none';
     drawIndicator.style.display = 'none';
