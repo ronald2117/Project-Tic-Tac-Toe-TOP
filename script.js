@@ -237,9 +237,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     checkForWinner,
     isDraw,
     blue,
-    yellow,
-    getXColor,
-    getOColor,
+    yellow
   };
 }
 
@@ -299,19 +297,11 @@ function ScreenController() {
       const cellSymbol = oneDimensionalBoard[i].getSymbol()
       cell[i].textContent = cellSymbol;
       
-      //Change color of X and O depending on the color of each player
+      //Change color of X and O
       if(cellSymbol == "X") {
-        if (game.getXColor() == game.blue) {
-          cell[i].style.color = game.blue;
-        } else {
-          cell[i].style.color = game.yellow;
-        }
+        cell[i].style.color = game.blue;
       } else {
-        if (game.getOColor() == game.blue) {
-          cell[i].style.color = game.blue;
-        } else {
-          cell[i].style.color = game.yellow;
-        }
+        cell[i].style.color = game.yellow;
       }
     }
   }
