@@ -258,16 +258,9 @@ function ScreenController() {
     game.putSymbol(row, column, symbol);
     updateBoardDisplay();
 
-    // if (game.getCurrentPlayer().name == "Player 1") {
-      playerTurnIndicator.innerHTML = game.getNextPlayer().name + " Turn"
-      console.log(game.getCurrentPlayer().name + ", " + game.getNextPlayer().name);
-      playerTurnIndicator.style.background = game.getNextPlayer().color;
-    // } else if (game.getCurrentPlayer().name == "Player 2") {
-    //   playerTurnIndicator.innerHTML = "Player 1 turn";
-    //   playerTurnIndicator.style.background = game.getP1Color();
-    // }
-
-
+    playerTurnIndicator.innerHTML = `${game.getNextPlayer().name} Turn (${game.getNextPlayer().symbol})`;
+    console.log(game.getCurrentPlayer().name + ", " + game.getNextPlayer().name);
+    playerTurnIndicator.style.background = game.getNextPlayer().color;
 
     if (game.IsGameOver()) {
       if (!game.isDraw()) {
@@ -330,7 +323,7 @@ function ScreenController() {
     newGameBtn.style.display = 'none';
     playerTurnIndicator.style.display = 'flex';
     playerTurnIndicator.style.background = game.getFirstPlayer().color;
-    playerTurnIndicator.textContent = game.getFirstPlayer().name + " turn";
+    playerTurnIndicator.textContent = `${game.getFirstPlayer().name} Turn (${game.getFirstPlayer().symbol})`;
     winIndicator.style.display = 'none';
     drawIndicator.style.display = 'none';
     game.nextRound();
