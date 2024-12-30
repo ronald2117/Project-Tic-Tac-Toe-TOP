@@ -69,6 +69,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     },
   ];
 
+  let gameOn = false;
   let round = 1;
   let drawScore = 0;
   let draw = false;
@@ -318,16 +319,23 @@ function ScreenController() {
     }
   }
 
-  const newGameBtnClick = () => {
-    if (game.getRound() == 1) {
-      cell.forEach((cell, index) => {
-        cell.addEventListener("click", () => {
-          const row = Math.floor(index / 3);
-          const column = index % 3;
-          addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
-        });
-      });
+  const handleCellClick = (index) => {
+    return () => {
+      const row = Math.floor(index / 3);
+      const column = index % 3;
+      addSymbolToCell(row, column, game.getCurrentPlayer().symbol);
     }
+  }
+
+  const enableCellClick = () => {
+    cell.forEach((cell, index) => {
+      const handler = handleCellClick(index);
+      cell.addEventListener("click", handler, { once: true });
+      });
+  }
+
+  const newGameBtnClick = () => {
+    enableCellClick();
 
     newGameBtn.style.display = 'none';
 
@@ -341,14 +349,14 @@ function ScreenController() {
 
   const restartBtnClick = () => {
     game.resetGame();
-    updateBoardDisplay();
-
+    
     winIndicator.style.display = 'none';
     drawIndicator.style.display = 'none';
     playerTurnIndicator.style.display = 'none';
     newGameBtn.style.display = 'flex';
-
-    updateGameBoardDisplay();
+    
+    updateBoardDisplay();
+    updateScoreBoardDisplay();
   }
 
   const start = () => {
