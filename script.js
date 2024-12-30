@@ -76,9 +76,8 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
   let winner = null;
   let gameOver = true;
   let currentPlayer = players[0];
+  let nextPlayer = players[1];
   let firstPlayer = players[0];
-  let xColor = players[0].color;
-  let oColor = players[1].color;
 
   const getRound = () => {
     return round;
@@ -115,14 +114,6 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     firstPlayer = player;
   }
 
-  const getXColor = () => {
-    return xColor;
-  }
-
-  const getOColor = () => {
-    return oColor;
-  }
-
   const getDrawScore = () => {
     return drawScore;
   };
@@ -147,16 +138,23 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     return currentPlayer;
   };
 
+  const getNextPlayer = () => {
+    return nextPlayer;
+  }
+
   const nextTurn = () => {
     currentPlayer = currentPlayer == players[0] ? players[1] : players[0];
+    nextPlayer = nextPlayer == players[0] ? players[1] : players[0];
   }
 
   const nextRound = () => {
+    draw = false;
     board.clearBoard();
     gameOver = false;
     winner = null;
     firstPlayer = firstPlayer == players[0] ? players[1] : players[0];
     currentPlayer = firstPlayer == players[0] ? players[1] : players[0];
+    nextPlayer = firstPlayer == players[0] ? players[0] : players[1];
   };
 
   const resetGame = () => {
@@ -197,7 +195,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
       }
     }
 
-    // Check if every item in the array is not null
+    // Check if every item in the array is not null else, draw
     const allNotNull = oneDimensionalBoard.every(cell => cell.getSymbol() !== null);
 
     if (allNotNull) {
@@ -229,6 +227,7 @@ function GameController(p1Name = "Player 1", p2Name = "Player 2") {
     setGameOver,
     getWinner,
     getCurrentPlayer,
+    getNextPlayer,
     nextTurn,
     nextRound,
     resetGame,
@@ -259,13 +258,16 @@ function ScreenController() {
     game.putSymbol(row, column, symbol);
     updateBoardDisplay();
 
-    if (game.getCurrentPlayer().name == "Player 1") {
-      playerTurnIndicator.innerHTML = "Player 2 turn"
-      playerTurnIndicator.style.background = game.getP2Color();
-    } else if (game.getCurrentPlayer().name == "Player 2") {
-      playerTurnIndicator.innerHTML = "Player 1 turn";
-      playerTurnIndicator.style.background = game.getP1Color();
-    }
+    // if (game.getCurrentPlayer().name == "Player 1") {
+      playerTurnIndicator.innerHTML = game.getNextPlayer().name + " Turn"
+      console.log(game.getCurrentPlayer().name + ", " + game.getNextPlayer().name);
+      playerTurnIndicator.style.background = game.getNextPlayer().color;
+    // } else if (game.getCurrentPlayer().name == "Player 2") {
+    //   playerTurnIndicator.innerHTML = "Player 1 turn";
+    //   playerTurnIndicator.style.background = game.getP1Color();
+    // }
+
+
 
     if (game.IsGameOver()) {
       if (!game.isDraw()) {
@@ -296,7 +298,7 @@ function ScreenController() {
     for (let i = 0; i < oneDimensionalBoard.length; i++) {
       const cellSymbol = oneDimensionalBoard[i].getSymbol()
       cell[i].textContent = cellSymbol;
-      
+
       //Change color of X and O
       if(cellSymbol == "X") {
         cell[i].style.color = game.blue;
@@ -328,6 +330,7 @@ function ScreenController() {
     newGameBtn.style.display = 'none';
     playerTurnIndicator.style.display = 'flex';
     playerTurnIndicator.style.background = game.getFirstPlayer().color;
+    playerTurnIndicator.textContent = game.getFirstPlayer().name + " turn";
     winIndicator.style.display = 'none';
     drawIndicator.style.display = 'none';
     game.nextRound();
@@ -353,8 +356,8 @@ function ScreenController() {
     restartBtn.addEventListener("click", restartBtnClick);
 
     //Change initial backround color and text of player indicator depending on the first player
-    playerTurnIndicator.style.background = game.getFirstPlayer().color;
-    playerTurnIndicator.textContent = game.getFirstPlayer().name + " turn";
+    // playerTurnIndicator.style.background = game.getFirstPlayer().color;
+    // playerTurnIndicator.textContent = game.getFirstPlayer().name + " turn";
   }
 
   return { start };
