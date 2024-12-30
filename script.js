@@ -248,7 +248,7 @@ function ScreenController() {
   const game = GameController();
   const newGameBtn = document.querySelector(".new-game-btn");
   const restartBtn = document.querySelector(".restart-btn")
-  const playerTurnIndicator = document.querySelector(".player-turn-indicator");
+  const playerTurnIndicator = document.querySelector(".turn-indicator");
   const winIndicator = document.querySelector(".win-indicator");
   const drawIndicator = document.querySelector(".draw-indicator");
 
